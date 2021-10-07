@@ -1,0 +1,39 @@
+{% extends "uni/layout.html" %}
+{% load static %}
+{% block title %}{{ subject.name }}{% endblock %}
+{%block body%}
+<h2 style="text-align: center;"><strong>{{ subject.name }}</strong></h2>
+<div id="subjStudents">
+    {%for s in students%}
+        <span class="card" style="margin-bottom: 20px;">
+            {{ s.id }}: {{ s.username }}
+            {%if user.role == 'b'%}
+                <button data-student_id="{{ s.id }}" data-student_name="{{ s.username }}" data-subj_id="{{ subject.id }}" id="editGradeButton" style="margin-top: 15px;" class="btn btn-info">Edit Grade</button>               
+            {%endif%}
+        </span>
+    {%empty%}
+        <div>No students enrolled to subject</div>
+    {%endfor%}
+</div>
+
+{%if user.role == 'b'%}
+<div id="editGrade" style="display: none;">
+    <div>
+        <h3 id="studentName"></h3>
+        <form id="editGradeForm" action="{% url 'submitGrade'%}" method="PUSH">
+            <input class="form-control" id="editGradeText" type="number">
+            <input id="editGradeSubmit" type="submit" value="Submit Grade" style="margin-top: 15px;" class="btn btn-info">
+        </form> 
+    </div>
+</div>
+<a style="margin-top: 15px;" class="btn btn-warning" href="{% url 'tutorSubjects' %}">Back</a>
+{%elif user.role == 'c'%}
+<a style="margin-top: 15px;" class="btn btn-warning" href="{% url 'viewSubjects' %}">Back</a>
+{%endif%}
+
+
+{%endblock%}
+
+{% block script %}
+    <script src="{% static 'uni/grade.js' %}"></script>
+{% endblock %}

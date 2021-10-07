@@ -1,0 +1,80 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Uni Portal{% endblock %}</title>
+        <meta name="viewport" content="width=device-width" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+        {% block script %}
+        {% endblock %}
+        
+    </head>
+    <!-- https://www.bitdegree.org/learn/responsive-image -->
+    <body class="bg-image" style="background: url('https://cdn.discordapp.com/attachments/650402134449324074/891683416301506580/5566878-01.png') no-repeat center fixed;
+    background-size: cover;
+    ">
+        <div style="background-color: #d8fdeb;">
+        <nav class="navbar navbar-light bg-light navbar-expand-lg fixed-top" >
+            <a class="navbar-brand" href="{% url 'index' %}">Uni Portal</a>
+            {% if user.is_authenticated %}
+                <a class="nav-link" href="{% url 'index' %}"  id="loggedusername"><strong>{{ request.user.getRole }}: {{ request.user.username }}</strong></a>
+            {% endif %}
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"  data-bs-target="#navbarOffcanvasLg" aria-controls="navbarOffcanvasLg">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="navbarOffcanvasLg" aria-labelledby="navbarOffcanvasLgLabel">
+                <div>
+                  <ul class="navbar-nav" >
+                    {% if user.is_authenticated %}
+                        {% if request.user.role == 'a' %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'subjectsListContent' %}">Courses Content</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'getSubjects' %}">Grades & Rate Tutors</a>
+                            </li>
+                            
+                        {%elif user.role == 'b'%}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'tutorSubjects' %}">Edit Grades & Update Content</a>
+                            </li>
+                        {%else%}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'listTutors' %}">View Tutor Ratings</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'viewSubjects' %}">Manage Subjects</a>
+                            </li>
+                        {%endif%}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'enroll' %}">Enroll</a>
+                        </li>
+                    {% endif %}
+                  </ul>
+            </div>
+          </nav>
+        
+        <div class="body">
+            <p>
+                <hr>
+                <hr>
+                <hr>
+            </p>
+            {% block body %}
+            {% endblock %}
+        </div>
+    </div>
+    </body>
+</html>

@@ -1,0 +1,73 @@
+{% extends "uni/layout.html" %}
+{% load static %}
+{% block title %}Subjects{% endblock %}
+{% block body %}
+{%if user.role == "c"%}
+
+<button id="addButton" style="margin-top: 5px; margin-bottom: 15px;" class="btn btn-info">Add subject</button>
+<div id="newSubj"  style="display: none;">
+    <div >
+        <form id="subjForm" action="{% url 'addSubject' %}" method="POST">
+            <input class="form-control" id="sName" type="text" placeholder="enter subject name">
+            <input class="form-control" id="desc" type="text" placeholder="enter subject description">
+            <input id="createSubj" type="submit" value="Add Subject" style="margin-top: 15px;" class="btn btn-primary">
+        </form>
+    </div>
+</div>
+
+<div id="subjects">
+    {%for s in subjects%}
+        <div class="card">
+            <span>
+                <strong>Subject Name: </strong>
+                <span id="subjectName{{s.id}}">{{ s.name }}</span>
+            </span>
+            <span>
+                <strong>Description: </strong>
+                <span id="subjectDesc{{s.id}}">{{ s.description }}</span>
+            </span>
+            <span>
+                <strong>Current Tutor: </strong>
+                <span id="subjectTutor{{s.id}}">{{ s.tutor }}</span>
+            </span>
+            <span>
+                <button data-name="{{ s.name }}" data-desc="{{ s.description }}" data-subjid="{{ s.id }}" id="editButton" style="margin-top: 15px;" class="btn btn-warning">Edit Subject</button>
+                <button data-subjname="{{ s.name }}" style="margin-top: 15px;" class="tutorButton btn btn-success">Assign Tutor</button>
+                <a href="{% url 'subjStudents' s.id%}" style="margin-top: 15px;" class="btn btn-dark"> Students</a>
+            </span>
+        </div>
+    {%endfor%}
+</div>
+
+<div id="editSubj" style="display: none;">
+    <div>
+        <form id="editSubjForm" action="{% url 'editSubject' %}" method="PUT">
+            <input class="form-control" id="editName" type="text">
+            <input class="form-control" id="editDesc" type="text">
+            <input id="editSubj" type="submit" value="Edit Subject" style="margin-top: 15px;" class="btn btn-info">
+            <a style="margin-top: 15px;" class="btn btn-warning" href="{% url 'viewSubjects' %}">Back</a>
+        </form> 
+    </div>
+</div>
+
+<div id="assignTutor" style="display: none;">
+    <h2 id="subjName"></h2>
+    <h3 >Available Tutors:</h3>
+    <select id="assignT" class="form-select" aria-label="Available tutors">
+    <option selected>None</option>
+    {%for t in teacher%}
+        <option>{{t.username}}</option>
+    {%empty%}
+        <div>No tutors available</div>
+    {%endfor%}
+    </select>
+    <a style="margin-top: 15px;" class="btn btn-warning" href="{% url 'viewSubjects' %}">Back</a>
+
+</div>
+
+{%endif%}    
+
+{% endblock %}
+{% block script %}
+    <script src="{% static 'uni/subjects.js' %}"></script>
+{% endblock %}

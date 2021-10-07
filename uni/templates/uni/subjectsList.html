@@ -1,0 +1,37 @@
+{% extends "uni/layout.html" %}
+{% load static %}
+{% block title %}Current Subjects{% endblock %}
+{%block body%}
+<div class="">
+    {%for s in subjects%}
+    <div class="card" style="margin-bottom: 20px;">
+        <span>
+            <strong>Subject Name: </strong>
+            <span id="subjectName">{{ s.name }}</span>
+        </span>
+        <span>
+            <strong>Current Tutor: </strong>
+            <span id="subjectTutor">{{ s.tutor }}</span>
+        </span>
+        {%if user.role == "a"%}
+        <span>
+            <strong>Current Grade: </strong>
+            <span id="subjectGrade/{{s.id}}"> <i>Press to view</i></span>
+        </span>
+        <span>        
+            <button id="getGrade" data-subj_id="{{ s.id }}" href="" style="margin-top: 15px;" class="btn btn-success">Get Grade</button>
+            {%if s.tutor != None%}
+            <a data-tutor="{{ s.tutor }}" href="{% url 'ratePage' s.tutor.id%}" style="margin-top: 15px;" class="rateTutor btn btn-warning">Rate Tutor</a>
+            {%endif%}
+        </span>
+        {%endif%}
+    </div>
+    {%empty%}
+        <div>No subjects</div>
+    {%endfor%}
+</div>
+{%endblock%}
+
+{% block script %}
+    <script src="{% static 'uni/grade.js' %}"></script>
+{% endblock %}

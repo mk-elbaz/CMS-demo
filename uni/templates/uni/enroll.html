@@ -1,0 +1,11 @@
+{% extends "uni/layout.html" %}
+{% block title %}Apply Page{% endblock %}
+{%block body%}
+<div class="form-control">
+<form action="{% url 'enroll' %}" method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <input id="" type="submit" value="Apply!" style="margin-top: 15px;" class="btn btn-primary">
+</form>
+</div>
+{%endblock%}

@@ -1,0 +1,18 @@
+{% extends "uni/layout.html" %}
+{% load static %}
+{% block title %}Upload Content{% endblock %}
+
+{%block body%}
+    <div class="row g-3">
+        <form class="" action="{% url 'uploadContent' subject.id%}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" style="margin-top: 10px;" value="Upload" class="btn btn-primary">
+            <a style="margin-top: 15px;" class="btn btn-warning" href="{% url 'tutorSubjects' %}">Back</a>
+
+          </form>
+    </div>
+{%endblock%}
+
+
+

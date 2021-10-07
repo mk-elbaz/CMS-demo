@@ -1,0 +1,26 @@
+{% extends "uni/layout.html" %}
+{% load static %}
+{% block title %}Subjects Content{% endblock %}
+{%block body%}
+<div class="">
+    {%for s in subjects%}
+    <div class="card" style="margin-bottom: 20px;">
+        <span>
+            <strong>Subject Name: </strong>
+            <span id="subjectName">{{ s.name }}</span>
+        </span>
+        <span>
+        {%for j in s.getContent%}
+            <hr>
+            <h4>{{j.name}}</h4>
+            <a href="/{{j.file}}" download class="btn btn-info"> Download Document </a>
+        {%empty%}
+            <div>No Content for this subject yet.</div>
+        {%endfor%}
+    </span>
+    </div>
+    {%empty%}
+        <div>No subjects</div>
+    {%endfor%}
+</div>
+{%endblock%}

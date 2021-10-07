@@ -1,0 +1,43 @@
+{% extends "uni/layout.html" %}
+{% block title %}Register{% endblock %}
+{% block body %}
+
+    <h2>Register</h2>
+
+    {% if message %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endif %}
+
+    <form class="" action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username">Enter your username:</label>
+            <input required class="form-control" id="username" autofocus type="text" name="username" placeholder="username">
+        </div>
+        <div class="form-group">
+            <label for="email">Enter your email:</label>
+            <input required class="form-control" id="email" type="email" name="email" placeholder="Email Address">
+        </div>
+        <div class="form-group">
+            <label for="password">Enter your password:</label>
+            <input required class="form-control" id="password" type="password" name="password" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <label for="confirmPassword">Confirm password:</label>
+            <input required class="form-control" id="confirmPassword" type="password" name="confirmation" placeholder="Confirm Password">
+        </div>
+        <div class="form-group">
+            <label for="role">Select Role:</label>
+            <select id="role" name="role" class="form-select" required aria-label="Select Role">
+                <option selected disabled value=""></option>
+                <option value="c">admin</option>
+                <option value="b">tutor</option>
+                <option value="a">student</option>
+        </div>
+       
+        <input class="btn btn-primary" style="margin-top: 10px;" type="submit" value="Register">
+    </form>
+    <div>
+    Already have an account? <a class="btn btn-success" href="{% url 'login' %}">Log In here.</a>
+    </div>
+{% endblock %}

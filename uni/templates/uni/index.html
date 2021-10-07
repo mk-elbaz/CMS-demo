@@ -1,0 +1,15 @@
+{% extends "uni/layout.html" %}
+{% load static %}
+
+
+{%block body%}
+{% if message %}
+        <div class="alert alert-primary">{{ message }}</div>
+{% endif %}
+{% if user.is_authenticated %}
+<h2 style="text-align: center;">Welcome, {{user.username}}</h2>
+{%else%}
+<h2 style="text-align: center;">Welcome!</h2>
+{%endif%}
+
+{%endblock%}

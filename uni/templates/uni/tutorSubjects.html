@@ -1,0 +1,21 @@
+{% extends "uni/layout.html" %}
+{% load static %}
+{% block title %}Current Subjects{% endblock %}
+{%block body%}
+<div class="card">
+    {%for s in subjects%}
+    <div class="card">
+        <span>
+            <strong>Subject Name: </strong>
+            <span id="subjectName">{{ s.name }}</span>
+        </span>
+        <span>
+            <a href="{% url 'subjStudents' s.id%}" style="margin-top: 15px;" class="btn btn-dark">Students</a>  
+            <a href="{% url 'uploadContent' s.id%}" style="margin-top: 15px;" class="btn btn-success">Upload Content</a>  
+        </span>
+    </div>
+    {%empty%}
+        <div>No subjects</div>
+    {%endfor%}
+</div>
+{%endblock%}

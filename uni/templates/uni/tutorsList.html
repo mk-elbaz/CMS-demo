@@ -1,0 +1,23 @@
+{% extends "uni/layout.html" %}
+{% load static %}
+{% block title %}Tutors{% endblock %}
+{%block body%}
+<div class="">
+    {%for t in tutors%}
+    <div class="card" style="margin-bottom: 20px;">
+        <span>
+            <strong>Tutor Name: </strong>
+            <span >{{ t.username }}</span>
+        </span>
+        <span>
+            <strong>Current Average Rating: </strong>
+            <span >{{ t.getRate }}</span>
+        </span>
+    </div>
+    {%empty%}
+        <div>No tutors</div>
+    {%endfor%}
+</div>
+<a style="margin-top: 15px;" class="btn btn-warning" href="{% url 'index' %}">Back</a>
+
+{%endblock%}
