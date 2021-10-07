@@ -1,5 +1,5 @@
 # CMS-demo
-A small university content management system made with Django
+A small university management system made with Django:
 
 Uni Portal is a small-scale online university content and grade management system, you can register and login as one of three roles:
 
